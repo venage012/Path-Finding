@@ -1,17 +1,13 @@
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "GraphTraversal.h"
 
 class PathFinding
 {
 private:
-	//note: [y][x]
-	char Map[20][20];
+	
 
 public:
-	PathFinding(std::string _FileName);
+	PathFinding();
 	~PathFinding();
 
 	void CheckMap();
