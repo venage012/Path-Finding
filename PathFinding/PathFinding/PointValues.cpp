@@ -21,7 +21,7 @@ void PointValues::SetID(char _ID, int _Position)
 
 void PointValues::SetNeighbors(char _nID, int _Position, int _Neighbor)
 {
-	PointNeighbors[_Neighbor][_Position] = _nID;
+	PointNeighbors[_Position][_Neighbor] = _nID;
 }
 
 int PointValues::GetPointID(char _Point)
@@ -30,7 +30,7 @@ int PointValues::GetPointID(char _Point)
 	{
 		if (PointID[i] == _Point)
 		{
-			return PointID[i];
+			return i;
 		}
 	}
 	return 0;
@@ -53,5 +53,15 @@ char PointValues::GetID(int _Position)
 
 char PointValues::GetNeighbor(int _Position, int _Neighbor)
 {
-	return PointNeighbors[_Neighbor][_Position];
+	return PointNeighbors[_Position][_Neighbor];
+}
+
+float PointValues::GetDist(int _Point1, int _Point2)
+{
+	float Total = 0;
+	float XTotal = GetX(_Point1) - GetX(_Point2);
+	float YTotal = GetY(_Point1) - GetY(_Point2);
+
+	Total = sqrt((XTotal * XTotal) + (YTotal * YTotal));
+	return Total;
 }

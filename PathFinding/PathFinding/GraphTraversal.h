@@ -1,9 +1,8 @@
 #pragma once
-#include <iostream>
 #include <fstream>
 #include <vector>
+#include <iomanip>
 #include <string>
-#include <cmath>
 #include "PointValues.h"
 
 class GraphTraversal
@@ -11,15 +10,18 @@ class GraphTraversal
 private:
 	//note: [y][x]
 	char Map[20][20];
+	float Matrix[11][11];
 	PointValues Points;
 
 public:
 	GraphTraversal();
 	~GraphTraversal();
 
-	void SetMap(std::string _FileName);
-	void GenerateList();
+	bool SetMap(std::string _FileName);
+	void PrintMap();
+	void GenerateMatrix();
 	void DFS();
+	void DFSRec(bool _Visited[], int _PointID, std::vector<int> _Result);
 	void BFS();
 
 	bool CheckMap();

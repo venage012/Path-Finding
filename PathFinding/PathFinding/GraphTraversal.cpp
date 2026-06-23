@@ -2,13 +2,27 @@
 
 GraphTraversal::GraphTraversal()
 {
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j < 20; j++)
+		{
+			Map[i][j] = '.';
+		}
+	}
+	for (int i = 0; i < 11; i++)
+	{
+		for (int j = 0; j < 11; j++)
+		{
+			Matrix[i][j] = 0.0f;
+		}
+	}
 }
 
 GraphTraversal::~GraphTraversal()
 {
 }
 
-void GraphTraversal::SetMap(std::string _FileName)
+bool GraphTraversal::SetMap(std::string _FileName)
 {
 	std::fstream Load;
 	std::string Save;
@@ -41,34 +55,109 @@ void GraphTraversal::SetMap(std::string _FileName)
 				{
 					Points.SetID(CurrentTile[0], Pointid);
 					Points.SetPointsCord(j, i, Pointid);
+					Pointid++;
 				}
 				Save.erase(0, 1);
 			}
 		}
 	}
 
-	for (int ID = 0; ID < 11; ID++)
+	PrintMap();
+	if (!CheckMap())
 	{
-		int IDX = Points.GetX(ID);
-		int IDY = Points.GetY(ID);
-		int Neighbors = 0;
+		return false;
+	}
 
-		for (int i = IDY; i < 0; i--)
+	for (int k = 0; k < 11; k++)
+	{
+		int Node[2] = { -1,-1 };
+		float Dist[2] = { -1.0,-1.0 };
+
+		for (int l = 0; l < 11; l++)
 		{
-			for (int j = IDX; j < 0; i--)
+			if (k == l)
 			{
+				continue;
+			}
+			float EucDist = Points.GetDist(k, l);
 
+			if (Node[0] == -1 || EucDist < Dist[0])
+			{
+				Node[1] = Node[0];
+				Dist[1] = Dist[0];
+				Node[0] = l;
+				Dist[0] = EucDist;
+			}
+			else if (Node[1] == -1 || EucDist < Dist[0])
+			{
+				Node[1] = l;
+				Dist[1] = EucDist;
 			}
 		}
+
+		Points.SetNeighbors(Points.GetID(Node[0]), k, 0);
+		Points.SetNeighbors(Points.GetID(Node[1]), k, 1);
+
+		for (int m = 0; m < 2; m++)
+		{
+			int Neighbor = Node[m];
+			float NearDist = Dist[m];
+
+			Matrix[Neighbor][k] = NearDist;
+			Matrix[k][Neighbor] = NearDist;
+		}
 	}
+	return true;
 }
 
-void GraphTraversal::GenerateList()
+void GraphTraversal::PrintMap()
 {
+}
+
+void GraphTraversal::GenerateMatrix()
+{
+	for (int i = 0; i < 11; i++)
+	{
+		for (int j = 0; j < 11; j++)
+		{
+			std::cout << std::fixed << std::setprecision(2)<< Matrix[i][j] << ", ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 void GraphTraversal::DFS()
 {
+	bool Visited[11];
+	std::vector<int> Results;
+	for (int i = 0; i < 11; i++)
+	{
+		Visited[i] = false;
+	}
+
+	DFSRec(Visited, 0, Results);
+
+	for (int i = 0; i < Results.size(); i++)
+	{
+		std::cout << Results[i] << " -> ";
+	}
+	std::cout << std::endl;
+}
+
+void GraphTraversal::DFSRec(bool _Visited[], int _PointID, std::vector<int> _Result)
+{
+	_Visited[_PointID] = true;
+
+	_Result.push_back(_PointID);
+
+	for (int i = 0; i < 2; i++)
+	{
+		int Neighbor = Points.GetPointID((Points.GetNeighbor(_PointID, i)));
+		if (_Visited[Neighbor] == false)
+		{
+			DFSRec(_Visited, _PointID, _Result);
+		}
+	}
 }
 
 void GraphTraversal::BFS()
@@ -86,11 +175,11 @@ bool GraphTraversal::CheckMap()
 	{
 		for (int j = 0; j < 20; j++)
 		{
-			if (Map[i][j] == 'S')
+			if (Map[i][j] == 's')
 			{
 				StartTile += 1;
 			}
-			else if (Map[i][j] == 'X')
+			else if (Map[i][j] == 'x')
 			{
 				ExitTile += 1;
 			}

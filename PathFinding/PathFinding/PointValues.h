@@ -1,9 +1,11 @@
 #pragma once
+#include <cmath>
+#include <iostream>
 class PointValues
 {
 private:
 	char PointID[11];
-	char PointNeighbors[4][11];
+	char PointNeighbors[11][2];
 	int PointX[11];
 	int PointY[11];
 
@@ -20,5 +22,7 @@ public:
 	int GetY(int _Position);
 	char GetID(int _Position);
 	char GetNeighbor(int _Position, int _Neighbor);
+
+	float GetDist(int _Point1, int _Point2);
 };
 
