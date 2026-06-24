@@ -1,15 +1,29 @@
+/**************************************************************************
+<Bachelor of Software Engineering (Games Development)>
+Media Design School
+Auckland
+New Zealand
+(c) <2026> Media Design School
+File Name : <PointValues.h>
+Description : <Stores and sends the data of traversal points>
+Author : <Liam Aumareva>
+Mail : <liam.aumareva@mds.ac.nz>
+**************************************************************************/
 #pragma once
 #include <cmath>
 #include <iostream>
 class PointValues
 {
 private:
+	//Arrays for the saved points
+	//0 = 's', 1 = 'a', 2 = 'b', etc
 	char PointID[11];
 	char PointNeighbors[11][2];
 	int PointX[11];
 	int PointY[11];
 
 public:
+	//Functions for point values
 	PointValues();
 	~PointValues();
 

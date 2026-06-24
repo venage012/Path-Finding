@@ -1,0 +1,10 @@
+﻿  GraphTraversal.cpp
+  main.cpp
+  PointValues.cpp
+C:\Users\venag\OneDrive\Documents\GitHub\Path-Finding\PathFinding\PathFinding\PointValues.cpp(62,15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\venag\OneDrive\Documents\GitHub\Path-Finding\PathFinding\PathFinding\PointValues.cpp(63,15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 618 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  PathFinding.vcxproj -> C:\Users\venag\OneDrive\Documents\GitHub\Path-Finding\PathFinding\x64\Release\PathFinding.exe
